@@ -1,0 +1,21 @@
+.statistics__list {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.statistics__item {
+  border: 1px solid var(--dark-color);
+  text-align: left;
+}
+
+.statistics__text {
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 14px;
+  padding-left: 5px;
+}
+
+.statistics__value {
+  text-align: center;
+  border: 1px solid var(--dark-color);
+}

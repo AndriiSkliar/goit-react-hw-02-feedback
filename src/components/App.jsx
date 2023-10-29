@@ -1,11 +1,12 @@
 import { Component } from "react"
-import { Section } from "./Feedback/Section";
+import { countTotalFeedback } from "./Statistics/countTotalFeedback";
+import { countPositiveFeedbackPercentage } from "./Statistics/countPositiveFeedbackPercentage";
+import { Section } from "./Section/Section";
 import { FeedbackOptions } from "./Feedback/FeedbackOptions";
-import { Statistics } from "./Feedback/Statistics";
-import { countTotalFeedback } from "./Feedback/countTotalFeedback";
-import { countPositiveFeedbackPercentage } from "./Feedback/countPositiveFeedbackPercentage";
-import { Notification } from "./Feedback/Notification";
-
+import { Statistics } from "./Statistics/Statistics";
+import { Notification } from "./Notificati0n/Notification";
+import friends from './data/friends.json';
+import { Gallery } from "./Gallery/Gallery";
 export class App extends Component {
   state = {
   good: 0,
@@ -23,29 +24,34 @@ export class App extends Component {
   render() {
     const { good, neutral, bad } = this.state;
     const totalFeedback = countTotalFeedback(this.state);
-    const positivePercentage = countPositiveFeedbackPercentage(this.state);
+    const statisticsData = [
+      { title: "Good", value: good },
+      { title: "Neutral", value: neutral },
+      { title: "Bad", value: bad },
+      { title: "Total", value: totalFeedback },
+      { title: "Positive feedback", value: countPositiveFeedbackPercentage(this.state) },
+    ];
 
     return (
-      <div>
-        <Section title="Please leave feedback">
-          <FeedbackOptions
-            onLeaveFeedback={this.handleOption}
-            options={Object.keys(this.state)}
-          />
-        </Section>
-         <Section title="Statistics">
-          {totalFeedback > 0 ? (
-            <Statistics
-              good={good}
-              neutral={neutral}
-              bad={bad}
-              total={totalFeedback}
-              positivePercentage={positivePercentage}
-            />
-          ) : (
-            <Notification message="There is no feedback" />
-          )}
-        </Section>
+      <div className="container">
+        <div className="wrapper">
+          <div className="wrapper__header">
+            <Section title="Please leave feedback">
+              <FeedbackOptions
+                onLeaveFeedback={this.handleOption}
+                options={Object.keys(this.state)}
+                friends={friends}
+              />
+            </Section>
+            <Section title="Statistics">
+              {totalFeedback > 0
+                ? (<Statistics data={statisticsData} />)
+                : (<Notification message="There is no feedback" />)
+              }
+            </Section>
+          </div>
+          <Gallery friends={friends} />
+        </div>
       </div>
     );
   }

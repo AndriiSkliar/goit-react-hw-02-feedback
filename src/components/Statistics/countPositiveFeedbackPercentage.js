@@ -1,4 +1,4 @@
-import { countTotalFeedback } from "./countTotalFeedback";
+import { countTotalFeedback } from "./countTotalFeedback"
 
 export const countPositiveFeedbackPercentage = options => {
   const { good } = options;
